@@ -42,6 +42,10 @@ import roboRace from "./assets/roboRace.png";
 import roboWar from "./assets/roboWar.png";
 import bestOutOfWaste from "./assets/bestOutOfWaste.png";
 import roboSoccer from "./assets/roboSoccer.png";
+import Uol from "./assets/Uol.png"
+import LULogoNew from "./assets/LULogoNew.png"
+import NAAC from "./assets/NAAC.jpg"
+
 
 export {
   CSEQuiz,
@@ -88,4 +92,7 @@ export {
   roboWar,
   bestOutOfWaste,
   roboSoccer,
+  Uol,
+  NAAC,
+  LULogoNew
 };

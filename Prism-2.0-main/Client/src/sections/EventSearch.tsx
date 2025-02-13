@@ -1,4 +1,5 @@
 import { useState } from "react";
+import toast from "react-hot-toast";
 import {
   Button,
   useDisclosure,
@@ -72,16 +73,27 @@ const EventSearch = () => {
   });
 
   // Function to check the event requires solo or team registration
-  const flag = (event: string) => {
-    if (event === "CSE Quiz") return true;
-    else if (
-      event === "Algorithmic Arena" ||
-      event === "Code Mesh" ||
-      event === "Capture The Flag" ||
-      event === "Bug Thug"
-    )
-      return false;
-  };
+  // const flag = (event: string) => {
+  //   if (event === "CSE Quiz") return true;
+  //   else if (
+  //     event === "Algorithmic Arena" ||
+  //     event === "Code Mesh" ||
+  //     event === "Capture The Flag" ||
+  //     event === "Bug Thug"
+  //   )
+  //     return false;
+  // };
+  const notify = ()=>{
+    toast("Registration starting soon")
+    // toast("Registration starting soon", {
+    //   icon: "🕒",
+    //   style: {
+    //     borderRadius: "8px",
+    //     background: "#333",
+    //     color: "#fff",
+    //   },
+    // });
+  }
 
   return (
     <div className="p-4">
@@ -188,15 +200,16 @@ const EventSearch = () => {
                     <div className="mx-2 justify-center items-center p-[2px] flex bg-gradient-to-r from-[#9747FF] to-[#9C1466] rounded-xl">
                       <Button
                         className="uppercase relative text-white bg-black text-small rounded-xl h-fit p-2"
-                        onPress={() => {
-                          onClose();
-                          window.location.href = "/register";
+                          onPress={notify}
+                        // onPress={() => {
+                        //   onClose();
+                          // window.location.href = "/register";
                           // if (flag(event.title)) {
                           //   window.location.href = "/formteam";
                           // } else {
                           //   window.location.href = "/form";
                           // }
-                        }}
+                        // }}
                       >
                         Register
                       </Button>
@@ -264,13 +277,14 @@ const EventSearch = () => {
                 <Button
                   color="warning"
                   variant="shadow"
-                  onPress={() => {
-                    onClose();
-                    window.location.href = "/register";
-                    // if (flag(selectedEvent.title))
-                    //   window.location.href = "/formteam";
-                    // else window.location.href = "/form";
-                  }}
+                  onPress={notify}
+                  // onPress={() => {
+                  //   onClose();
+                  //   window.location.href = "/register";
+                  //   if (flag(selectedEvent.title))
+                  //     window.location.href = "/formteam";
+                  //   else window.location.href = "/form";
+                  // }}
                   className="font-bold"
                 >
                   Register

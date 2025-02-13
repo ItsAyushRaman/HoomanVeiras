@@ -5,6 +5,7 @@ import {
   Stats,
   HeroAboutPage,
   Home_About,
+  SponsorsStrip
 } from "../AllSections";
 import { TextGlow } from "../AllComponents";
 
@@ -12,9 +13,10 @@ export default function Homepage() {
   return (
     <div className="relative">
       {/* Layout */}
-      <div className="flex flex-col gap-16">
+      <div className="flex flex-col">
         <Hero />
-        <div className="z-10 mx-5 md:mx-14 flex flex-col gap-16">
+        <SponsorsStrip/>
+        <div className="z-10 mx-5 md:mx-14 mt-16 flex flex-col gap-16">
           <Home_About />
           <HeroAboutPage />
           <Schedule />

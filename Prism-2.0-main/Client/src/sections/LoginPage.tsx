@@ -2,22 +2,103 @@ import React, { useState } from "react";
 import { Button, Link } from "@nextui-org/react";
 
 import { GridBkg, PrismLogohero } from "../AllAssets";
+import toast from "react-hot-toast";
+import { useAuthStore } from "../store/useAuthStore";
+
+
+interface LoginForm {
+  email: string;
+  password: string;
+}
+
 
 function LoginPage() {
-  const [UserData, setUserData] = useState({
+    const [showPassword, setPassword] = useState(false);
+  
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState<LoginForm>({
     email: "",
     password: "",
   });
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    setUserData({ ...UserData, [e.target.name]: e.target.value });
+  // const [UserData, setUserData] = useState({
+  //   email: "",
+  //   password: "",
+  // });
+
+
+
+  const { login, isLoggingIn } = useAuthStore();
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Form Submitted:", UserData);
+  // validation function 
+  const validateForm = (data: LoginForm): boolean => {
+    console.log("vcheck 0");
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+    if (!data.email || !data.password) {
+    console.log("vcheck 1");
+
+      toast.error("Please fill in all fields");
+      return false;
+    }
+
+    if (!emailRegex.test(data.email)) {
+    console.log("vcheck 2");
+
+      toast.error("Please enter a valid email");
+      return false;
+    }
+
+    if (!passwordRegex.test(data.password)) {
+    console.log("vcheck 3");
+
+      toast.error(
+        "Password must be at least 8 characters long and include at least one letter, one number, and one special character"
+      );
+      return false;
+    }
+
+    return true;
   };
+
+  //handel submit 
+  const handleSubmit = async (e: React.FormEvent) => {
+    console.log("check 0");
+    e.preventDefault();
+
+    if (isLoggingIn || loading) return;
+    console.log("check 1");
+
+
+    if (!validateForm(formData)) return;
+    console.log("check 2");
+
+    setLoading(true);
+    try {
+    console.log("check 3");
+
+      await login(formData);
+    console.log("check 1");
+    } catch (error) {
+    console.log("check 4");
+
+      console.error("Login error:", error);
+      toast.error("Invalid email or password. Please try again.");
+    } finally {
+    console.log("check 5");
+
+      setLoading(false);
+    }
+  };
+
+  // const handleSubmit = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   console.log("Form Submitted:", UserData);
+  // };
 
   return (
     <div className="relative w-full flex justify-center items-center p-6 overflow-hidden">
@@ -43,7 +124,7 @@ function LoginPage() {
             <input
               type="email"
               name="email"
-              value={UserData.email}
+              value={formData.email}
               onChange={handleChange}
               required
               className="w-full px-3 py-2 mt-1 bg-gray-700 border border-gray-600 rounded-md focus:ring-4 focus:ring-[#9747FF] focus:ring-offset-2"
@@ -52,17 +133,28 @@ function LoginPage() {
           </div>
 
           {/* Password */}
-          <div className="mb-4">
-            <label className="block text-sm font-medium">Password</label>
-            <input
-              type="password"
-              name="password"
-              value={UserData.password}
-              onChange={handleChange}
-              className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:ring-4 focus:ring-[#9747FF] focus:ring-offset-2"
-              placeholder="Enter your password"
-              required
-            />
+          <div className="form-control">
+            <label className="label block text-sm font-medium">
+              Password *
+            </label>
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                className="w-full px-3 py-2 mt-1 bg-gray-700 border border-gray-600 rounded-md focus:ring-4 focus:ring-[#9747FF] focus:ring-offset-2"
+                placeholder="••••••••"
+                value={formData.password}
+                onChange={(e) =>
+                  setFormData({ ...formData, password: e.target.value })
+                }
+              />
+              <button
+                type="button"
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-black"
+                onClick={() => setPassword(!showPassword)}
+              >
+                {showPassword ? "🙈" : "👁️"}
+              </button>
+            </div>
           </div>
 
           {/* Submit Button */}

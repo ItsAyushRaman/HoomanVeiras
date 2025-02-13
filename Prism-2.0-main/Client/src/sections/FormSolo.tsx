@@ -1,26 +1,51 @@
 import React, { useState } from "react";
 import { Link, Button } from "@nextui-org/react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+// import axios from "axios";
+
 import { GridBkg, PrismLogohero } from "../AllAssets";
+import toast from "react-hot-toast";
+import { useAuthStore } from "../store/useAuthStore";
+
+interface Member {
+  name: string;
+}
+
+interface FormData {
+  name: string;
+  university: string;
+  course: string;
+  department: string;
+  year: string;
+  email: string;
+  password: string;
+  contactNumber: string;
+  gender: string;
+  type: "SOLO" | "TEAM";
+  members: Member[];
+}
 
 export default function FormSolo() {
+  const [showPassword, setPassword] = useState(false);
+
   const [isTeam, setIsTeam] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState({
+  const [error] = useState("");
+
+  const [formData, setFormData] = useState<FormData>({
     name: "",
     university: "",
-    course: " ",
+    course: "",
     department: "",
     year: "",
     email: "",
+    password: "",
     contactNumber: "",
     gender: "",
     type: "SOLO",
     members: [{ name: "" }, { name: "" }, { name: "" }, { name: "" }],
   });
+
+  const { signup, isSigningUp } = useAuthStore();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -43,37 +68,152 @@ export default function FormSolo() {
     });
   };
 
+  // validating form
+  const validateForm = (data: FormData): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const passwordRegex =
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const phoneRegex = /^[6-9]\d{9}$/;
+    const nameRegex = /^[A-Za-z\s]+$/;
+    console.log("validation check 0");
+
+    // Check for empty fields
+    if (
+      !data.name ||
+      !data.university ||
+      !data.course ||
+      !data.department ||
+      !data.year ||
+      !data.email ||
+      !data.password ||
+      !data.contactNumber 
+    ) {
+      toast.error("Please fill all details");
+    console.log("validation check 1");
+
+      return false;
+    }
+
+    // Validate name
+    if (!nameRegex.test(data.name)) {
+      toast.error("Name should contain only alphabets");
+    console.log("validation check 2");
+
+      return false;
+    }
+
+    // Validate email
+    if (!emailRegex.test(data.email)) {
+      toast.error("Please enter a valid email");
+      return false;
+    }
+
+    // Validate password security
+    if (!passwordRegex.test(data.password)) {
+      toast.error(
+        "Password must be at least 8 characters long and include at least one letter, one number, and one special character"
+      );
+      return false;
+    }
+
+    // Validate phone number
+    if (!phoneRegex.test(data.contactNumber)) {
+      toast.error("Please enter a valid 10-digit phone number");
+      return false;
+    }
+
+    // Validate member names
+    for (const member of data.members) {
+      if (member.name && !nameRegex.test(member.name)) {
+        toast.error("Member names should contain only alphabets");
+        return false;
+      }
+    }
+    console.log("validation check 3");
+
+
+    return true;
+  };
+
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   setLoading(true);
+  //   const bodySubmit = {
+  //     ...formData,
+  //     department: formData.department.toLowerCase(),
+  //   };
+  //   console.log("Form Submitted:", bodySubmit);
+  //   setError("");
+
+  //   try {
+  //     const response = await axios.post(
+  //       "https://prism-backend.vercel.app/registration/team",
+  //       bodySubmit
+  //     );
+  //     console.log("Form submitted successfully:", response.data);
+  //     navigate("/events");
+  // window.scrollTo({ top: 0, behavior: "smooth" });
+  // alert("Registration Successful");
+  // } catch (err) {
+  //     console.error("Error submitting form:", err);
+  //     if (axios.isAxiosError(err)) {
+  //       setError(
+  //         err.response?.data?.message ||
+  //           "An error occurred while submitting the form"
+  //       );
+  //     } else {
+  //       setError("An error occurred while submitting the form");
+  //     }
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
   const handleSubmit = async (e: React.FormEvent) => {
+    console.log("running step 0");
     e.preventDefault();
-    setLoading(true);
-    const bodySubmit = {
-      ...formData,
-      department: formData.department.toLowerCase(),
-    };
-    console.log("Form Submitted:", bodySubmit);
-    setError("");
+    // Prevent multiple submissions if already signing up
+    console.log("running step 1");
+    // if (isSigningUp || loading) return;
+    // Validate form before submission
+    const success = validateForm(formData);
+    if(!success){
+      console.log("validation failed")
+
+    }
+    // const successtemp=true;
+    
+    if (success) {
+      console.log("running step two")
+      setLoading(true);
 
     try {
-      const response = await axios.post(
-        "https://prism-backend.vercel.app/registration/team",
-        bodySubmit
-      );
-      console.log("Form submitted successfully:", response.data);
-      navigate("/events");
-      // window.scrollTo({ top: 0, behavior: "smooth" });
-      // alert("Registration Successful");
-    } catch (err) {
-      console.error("Error submitting form:", err);
-      if (axios.isAxiosError(err)) {
-        setError(
-          err.response?.data?.message ||
-            "An error occurred while submitting the form"
-        );
-      } else {
-        setError("An error occurred while submitting the form");
-      }
-    } finally {
+      // Securely send the form data to the signup function
+      console.log("running step 3")
+      await signup(formData);
+
+      // toast.success("Registration successful!");
+      // Reset the form after successful submission
+      setFormData({
+        name: "",
+        university: "",
+        course: "",
+        department: "",
+        year: "",
+        email: "",
+        password: "",
+        contactNumber: "",
+        gender: "",
+        type: "SOLO",
+        members: [{ name: "" }, { name: "" }, { name: "" }, { name: "" }],
+      });
+       
+    } catch (error) {
+      console.error("Signup error:", error);
+      toast.error("An error occurred during registration. Please try again.");
+    }finally {
       setLoading(false);
+    }
     }
   };
 
@@ -242,6 +382,31 @@ export default function FormSolo() {
             />
           </div>
 
+          {/* Password */}
+          <div className="form-control">
+            <label className="label block text-sm font-medium">
+              Password *
+            </label>
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                className="w-full px-3 py-2 mt-1 bg-gray-700 border border-gray-600 rounded-md focus:ring-4 focus:ring-[#9747FF] focus:ring-offset-2"
+                placeholder="••••••••"
+                value={formData.password}
+                onChange={(e) =>
+                  setFormData({ ...formData, password: e.target.value })
+                }
+              />
+              <button
+                type="button"
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-black"
+                onClick={() => setPassword(!showPassword)}
+              >
+                {showPassword ? "🙈" : "👁️"}
+              </button>
+            </div>
+          </div>
+
           {/* Contact Number */}
           <div className="mb-4">
             <label className="block text-sm font-medium">
@@ -284,7 +449,7 @@ export default function FormSolo() {
             <div className="relative p-[2px] w-[200px] flex justify-center bg-gradient-to-r from-[#9747FF] via-[#DBC1FD] to-[#9C1466]">
               <Button
                 type="submit"
-                disabled={loading}
+                disabled={loading || isSigningUp}
                 className="relative p-6 w-[195px] text-white bg-black text-lg rounded-none"
               >
                 {loading ? "Submitting.." : "Submit"}
@@ -294,8 +459,7 @@ export default function FormSolo() {
 
           <div className="pt-4 flex justify-center">
             <div>
-              Already registered?{" "}
-              <Link href="/login">Login</Link> instead.
+              Already registered? <Link href="/login">Login</Link> instead.
             </div>
           </div>
 

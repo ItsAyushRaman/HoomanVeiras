@@ -18,6 +18,7 @@ import Home_About from "./sections/homepage/About";
 import { CarouselDemo } from "./sections/CarouselDemo";
 import FormSolo from "./sections/FormSolo";
 import FormTeam from "./sections/FormTeam";
+import Header from "./sections/Header";
 
 export {
   CarouselDemo,
@@ -40,4 +41,5 @@ export {
   AboutUniversity,
   FormSolo,
   FormTeam,
+  Header
 };

@@ -82,11 +82,10 @@ export default function Hero() {
           </p>
         </div>
         {/* Button */}
-        <Link color="foreground" href="sponsors" className="text-white">
+        <Link color="foreground" href="/events" className="text-white" >
           <div className="relative p-[2px] w-[200px] flex justify-center bg-gradient-to-r from-[#9747FF] to-[#9C1466] rounded-xl">
             <Button
               className="relative p-6 w-[195px] text-white bg-black text-lg rounded-xl"
-              href="/register"
             >
               REGISTER NOW
             </Button>

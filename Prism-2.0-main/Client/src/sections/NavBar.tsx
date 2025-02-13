@@ -13,6 +13,7 @@ import {
 
 import LULogoNew from "../assets/LULogoNew.png";
 import NavLogoTwo from "../assets/NavLogoTwo.png";
+import toast from "react-hot-toast";
 
 const getHref = (item: string) => {
   switch (item) {
@@ -25,7 +26,7 @@ const getHref = (item: string) => {
     case "EVENTS":
       return "/events";
     case "LOGIN":
-      return "/login";
+      return "/";
     default:
       return "#";
   }
@@ -35,6 +36,10 @@ export default function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   const menuItems = ["HOME", "SPONSORS", "ABOUT", "EVENTS", "LOGIN"];
+
+  const notify = ()=>{
+    toast("Registration starting soon")
+  }
 
   return (
     <Navbar
@@ -53,7 +58,7 @@ export default function NavBar() {
             <img
               src={LULogoNew}
               alt="LU Logo"
-              className="w-12 h-12 md:w-14 md:h-14 lg:w-14 lg:h-14 object-contain"
+              className=" block sm:hidden w-12 h-12 md:w-14 md:h-14 lg:w-14 lg:h-14 object-contain"
             />
           </div>
         </NavbarBrand>
@@ -93,8 +98,9 @@ export default function NavBar() {
           <Button
             as={Link}
             // color="primary"
-            href="/login"
+            // href="/login"
             variant="flat"
+            onPress={notify}
             className="rounded-xl text-white  bg-[#0E101C]  border-spacing-3 border-2 border-prismpurple hover:border-pink/50 hover:shadow-lg"
           >
             LOGIN

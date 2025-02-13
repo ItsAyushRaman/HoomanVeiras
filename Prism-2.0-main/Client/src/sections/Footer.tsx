@@ -1,16 +1,28 @@
 import { Link } from "react-router-dom"; // Import Link from react-router-dom
 import {
-  DiscordLogo,
-  LinkdinLogo,
+  // DiscordLogo,
+  // LinkdinLogo,
   GridBkg,
-  InstaLogo,
-  TweeterLogo,
-  EmailLogo,
+  // InstaLogo,
+  // TweeterLogo,
+  // EmailLogo,
   FooterLogo,
 } from "../AllAssets";
 
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
+} from "@nextui-org/react";
+
+import {IconBrandDiscordFilled,IconBrandX,IconBrandInstagram,IconBrandLinkedin,IconMail,IconPhone} from "@tabler/icons-react"
+
 // h-[45px] w-[190px] md:w-[520px] sm:w-[700px]
 function Footer() {
+  const {isOpen, onOpen, onOpenChange} = useDisclosure();
   return (
     <>
       <footer className="relative flex justify-center items-center bg-transparent text-white  over pb-5 overflow-hidden">
@@ -44,11 +56,12 @@ function Footer() {
               rel="noopener noreferrer"
               className="hover:opacity-80"
             >
-              <img
+              {/* <img
                 src={TweeterLogo}
                 alt="Twitter"
                 className="h-6 w-6 md:h-8 md:w-8 lg:h-10 lg:w-10" // Larger size for laptop
-              />
+              /> */}
+              <IconBrandX size={48} color="#B072FF"/>
             </Link>
             <Link
               to="https://discord.gg/wWnJyKcu" // Replace with a valid URL
@@ -56,11 +69,13 @@ function Footer() {
               rel="noopener noreferrer"
               className="hover:opacity-80"
             >
-              <img
+              {/* <img
                 src={DiscordLogo}
                 alt="Discord"
                 className="h-6 w-6 md:h-8 md:w-8 lg:h-10 lg:w-10" // Larger size for laptop
               />
+              */}
+              <IconBrandDiscordFilled size={48} color="#B072FF"/>
             </Link>
             <Link
               to="https://www.instagram.com/prism.foet?igsh=am1yMzZweDBiMGFm" // Replace with a valid URL
@@ -68,11 +83,12 @@ function Footer() {
               rel="noopener noreferrer"
               className="hover:opacity-80"
             >
-              <img
+              {/* <img
                 src={InstaLogo}
                 alt="Instagram"
                 className="h-6 w-6 md:h-8 md:w-8 lg:h-10 lg:w-10" // Larger size for laptop
-              />
+              /> */}
+              <IconBrandInstagram size={48} color="#B072FF"/>
             </Link>
             {/* <Link
               to="https://youtube.com"
@@ -92,19 +108,22 @@ function Footer() {
               rel="noopener noreferrer"
               className="hover:opacity-80"
             >
-              <img
+              {/* <img
                 src={LinkdinLogo}
                 alt="LinkedIn"
                 className="h-6 w-6 md:h-8 md:w-8 lg:h-10 lg:w-10" // Larger size for laptop
-              />
+              /> */}
+              <IconBrandLinkedin size={48} color="#B072FF"/>
             </Link>
             <Link to="mailto:prism2025.contact@gmail.com" className="hover:opacity-80">
-              <img
+              {/* <img
                 src={EmailLogo}
                 alt="Email"
                 className="h-6 w-6 md:h-8 md:w-8 lg:h-10 lg:w-10" // Larger size for laptop
-              />
+              /> */}
+              <IconMail size={48} color="#B072FF"/>
             </Link>
+            <IconPhone size={48} color="#B072FF" onClick={onOpen} className="cursor-pointer hover:opacity-80"/>
           </div>
 
           {/* Text Links */}
@@ -116,7 +135,7 @@ function Footer() {
               Partner with us
             </Link>
             <Link
-              to="/code-of-conduct"
+              to="/sponsors"
               className="text-[#B072FF] hover:font-bold md:min-w-[150px]"
             >
               Code of Conduct
@@ -129,6 +148,32 @@ function Footer() {
             Made with 💜 by Archons
           </Link>
         </div>
+        {/* Modal for contact information */}
+        <Modal
+        backdrop="blur"
+        className="bg-[#4D0873]/80 p-4"
+        isOpen={isOpen}
+        radius="lg"
+        onOpenChange={onOpenChange}
+      >
+        <ModalContent>
+          {() => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">Contact Details</ModalHeader>
+              <ModalBody>
+                <p>
+                 Ranjeet Singh - 9696942692
+                </p>
+                <p>
+                  Rajneesh Sharma - 7668408679
+                </p>
+              </ModalBody>
+              <ModalFooter>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
       </footer>
     </>
   );
