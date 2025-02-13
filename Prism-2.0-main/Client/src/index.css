@@ -1,0 +1,20 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap'); */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-nunito_sans;
+  }
+}
+
+@font-face {
+  font-family: "sephora";
+  src: url("../src/fonts/Sephora.ttf");
+}
+
+@font-face {
+  font-family: "blanka";
+  src: url("../src/fonts/Blanka-Regular.otf");
+}
