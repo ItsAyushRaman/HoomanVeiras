@@ -48,7 +48,7 @@ function Footer() {
           </div>
 
           {/* Links Section */}
-          <div className="flex justify-center items-center gap-6 mb-2">
+         <div className="flex justify-center items-center lg:gap-6 gap-4 md:gap-6 mb-2">
             {/* Icon Links */}
             <Link
               to="https://x.com/PlacementEnggLU?t=vKQzx4oQXnIOphMkvWbR9w&s=08" // Use the Link component for navigation
