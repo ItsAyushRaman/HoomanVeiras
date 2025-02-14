@@ -11,7 +11,7 @@ import {
   Button,
 } from "@nextui-org/react";
 
-import LULogoNew from "../assets/LULogoNew.png";
+//import LULogoNew from "../assets/LULogoNew.png";
 import NavLogoTwo from "../assets/NavLogoTwo.png";
 import toast from "react-hot-toast";
 
