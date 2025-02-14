@@ -11,7 +11,7 @@ import {
   Button,
 } from "@nextui-org/react";
 
-// import LULogoNew from "../assets/LULogoNew.png";
+import LULogoNew from "../assets/LULogoNew.png";
 import NavLogoTwo from "../assets/NavLogoTwo.png";
 import toast from "react-hot-toast";
 
@@ -53,13 +53,13 @@ export default function NavBar() {
             <img
               src={NavLogoTwo}
               alt="Prism Logo"
-              className="w-25 h-10 md:w-40 md:h-14 lg:w-40 lg:h-20 object-contain"
+              className="w-40 h-12 md:w-40 md:h-14 lg:w-40 lg:h-20 object-contain"
             />
-            {/* <img
+            <img
               src={LULogoNew}
               alt="LU Logo"
               className=" block sm:hidden w-12 h-12 md:w-14 md:h-14 lg:w-14 lg:h-14 object-contain"
-            /> */}
+            />
           </div>
         </NavbarBrand>
         <NavbarMenuToggle
@@ -107,7 +107,7 @@ export default function NavBar() {
           </Button>
         </NavbarItem>
       </NavbarContent>
-      <NavbarMenu className="h-fit  bg-white/10 backdrop-blur-sm shadow-md text-white">
+      <NavbarMenu className="h-fit mt-16 bg-white/10 backdrop-blur-sm shadow-md text-white">
         {menuItems.map((item, index) => (
           <NavbarMenuItem key={`${item}-${index}`}>
             <Link
