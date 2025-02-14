@@ -53,7 +53,7 @@ export default function NavBar() {
             <img
               src={NavLogoTwo}
               alt="Prism Logo"
-              className="w-40 h-12 md:w-40 md:h-14 lg:w-40 lg:h-20 object-contain"
+              className="w-25 h-8 md:w-40 md:h-14 lg:w-40 lg:h-20 object-contain"
             />
             {/* <img
               src={LULogoNew}
