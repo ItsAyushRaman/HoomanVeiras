@@ -55,11 +55,11 @@ export default function NavBar() {
               alt="Prism Logo"
               className="w-40 h-12 md:w-40 md:h-14 lg:w-40 lg:h-20 object-contain"
             />
-            <img
+            {/* <img
               src={LULogoNew}
               alt="LU Logo"
               className=" block sm:hidden w-12 h-12 md:w-14 md:h-14 lg:w-14 lg:h-14 object-contain"
-            />
+            /> */}
           </div>
         </NavbarBrand>
         <NavbarMenuToggle
