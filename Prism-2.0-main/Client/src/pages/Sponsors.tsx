@@ -8,8 +8,10 @@ import githubSponsor from "../assets/githubSponsor.png";
 import { Siuk, PostmanLogo } from "../AllAssets";
 import { Ms, AlgoZ, logoCCWhite, AwsCloudClub } from "../AllAssets";
 import { TextGlow } from "../AllComponents";
+import { Modal, ModalContent, ModalBody, ModalHeader, ModalFooter, useDisclosure } from "@nextui-org/react";
 
 const Sponsors: React.FC = () => {
+  const {isOpen, onOpen, onOpenChange} = useDisclosure();
   const sponsors = [
     { name: "9", img: Quadrant },
     { name: "Salesforce", img: salesForce },
@@ -58,7 +60,7 @@ const Sponsors: React.FC = () => {
             </p>
             <p className="font-normal">
               For inquiries and partnership opportunities,{" "}
-              <span className="text-purple-500">contact us </span> here!
+              <span className="text-purple-500 cursor-pointer" onClick={onOpen}>contact us </span> here!
             </p>
           </div>
           <p className="font-extralight">
@@ -101,6 +103,32 @@ const Sponsors: React.FC = () => {
         </section>
       </div>
       <TextGlow />
+      {/* Modal for contact information */}
+      <Modal
+        backdrop="blur"
+        className="bg-[#4D0873]/80 p-4"
+        isOpen={isOpen}
+        radius="lg"
+        onOpenChange={onOpenChange}
+      >
+        <ModalContent>
+          {() => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">Contact Details</ModalHeader>
+              <ModalBody>
+                <p>
+                 Ranjeet Singh - 9696942692
+                </p>
+                <p>
+                  Rajneesh Sharma - 7668408679
+                </p>
+              </ModalBody>
+              <ModalFooter>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
     </div>
   );
 };
