@@ -7,7 +7,8 @@ function Ribbon() {
       <img src={LULogoNew} alt="" className="h-[85%] md:h-[8.5vh] " />
 
       <div className="flex flex-col items-center justify-center h-full text-white text-center">
-        <p className=" font-bold text-xl md:text-2xl xl:text-3xl font-sans">
+      <p className="font-bold text-xl md:text-2xl xl:text-3xl text-center" style={{ fontFamily: 'Unbounded, sans-serif' }}>
+
           Universty of Lucknow
         </p>
         <p className=" text-xs  font-sans">
