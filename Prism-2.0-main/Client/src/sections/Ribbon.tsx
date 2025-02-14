@@ -9,7 +9,7 @@ function Ribbon() {
       <div className="flex flex-col items-center justify-center h-full text-white text-center">
       <p className="font-bold text-xl md:text-2xl xl:text-3xl text-center" style={{ fontFamily: 'Unbounded, sans-serif' }}>
 
-          Universty of Lucknow
+          University of Lucknow
         </p>
         <p className=" text-xs  font-sans">
           {"("}Accredited A++ By NAAC{")"}
